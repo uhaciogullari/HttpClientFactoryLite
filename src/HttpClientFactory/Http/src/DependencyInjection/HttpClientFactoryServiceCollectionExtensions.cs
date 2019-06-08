@@ -26,7 +26,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.AddLogging();
             services.AddOptions();
 
             //
@@ -42,11 +41,6 @@ namespace Microsoft.Extensions.DependencyInjection
             //
             services.TryAdd(ServiceDescriptor.Transient(typeof(ITypedHttpClientFactory<>), typeof(DefaultTypedHttpClientFactory<>)));
             services.TryAdd(ServiceDescriptor.Transient(typeof(DefaultTypedHttpClientFactory<>.Cache), typeof(DefaultTypedHttpClientFactory<>.Cache)));
-
-            //
-            // Misc infrastructure
-            //
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<IHttpMessageHandlerBuilderFilter, LoggingHttpMessageHandlerBuilderFilter>());
 
             return services;
         }
