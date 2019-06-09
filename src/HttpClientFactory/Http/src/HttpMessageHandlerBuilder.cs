@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -38,19 +38,6 @@ namespace Microsoft.Extensions.Http
         /// <see cref="HttpClient"/> pipeline.
         /// </summary>
         public abstract IList<DelegatingHandler> AdditionalHandlers { get; }
-
-        /// <summary>
-        /// Gets an <see cref="IServiceProvider"/> which can be used to resolve services
-        /// from the dependency injection container.
-        /// </summary>
-        /// <remarks>
-        /// This property is sensitive to the value of 
-        /// <see cref="HttpClientFactoryOptions.SuppressHandlerScope"/>. If <c>true</c> this
-        /// property will be a reference to the application's root service provider. If <c>false</c>
-        /// (default) this will be a reference to a scoped service provider that has the same
-        /// lifetime as the handler being created.
-        /// </remarks>
-        public virtual IServiceProvider Services { get; }
 
         /// <summary>
         /// Creates an <see cref="HttpMessageHandler"/>.

@@ -140,15 +140,10 @@ namespace Microsoft.Extensions.Http
         // Internal for tests
         internal ActiveHandlerTrackingEntry CreateHandlerEntry(string name)
         {
-            var services = _services;
-            var scope = (IServiceScope)null;
+            var scope = _scopeFactory.CreateScope();
+            var services = scope.ServiceProvider;
 
             var options = _optionsMonitor.Get(name);
-            if (!options.SuppressHandlerScope)
-            {
-                scope = _scopeFactory.CreateScope();
-                services = scope.ServiceProvider;
-            }
 
             try
             {
