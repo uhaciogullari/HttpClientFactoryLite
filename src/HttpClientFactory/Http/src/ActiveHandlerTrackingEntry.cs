@@ -1,10 +1,9 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Internal;
 
 namespace Microsoft.Extensions.Http
@@ -22,12 +21,10 @@ namespace Microsoft.Extensions.Http
         public ActiveHandlerTrackingEntry(
             string name,
             LifetimeTrackingHttpMessageHandler handler,
-            IServiceScope scope,
             TimeSpan lifetime)
         {
             Name = name;
             Handler = handler;
-            Scope = scope;
             Lifetime = lifetime;
 
             _lock = new object();
@@ -38,8 +35,6 @@ namespace Microsoft.Extensions.Http
         public TimeSpan Lifetime { get; }
 
         public string Name { get; }
-
-        public IServiceScope Scope { get; }
 
         public void StartExpiryTimer(TimerCallback callback)
         {

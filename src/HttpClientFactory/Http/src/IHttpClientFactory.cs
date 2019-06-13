@@ -1,6 +1,8 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using Microsoft.Extensions.Http;
+
 namespace System.Net.Http
 {
     /// <summary>
@@ -31,5 +33,12 @@ namespace System.Net.Http
         /// </para>
         /// </remarks>
         HttpClient CreateClient(string name);
+
+        /// <summary>
+        /// Registers an <see cref="HttpClient"/> with configured options
+        /// </summary>
+        /// <param name="name">The logical name of the client to create.</param>
+        /// <param name="configureOptions">A delegate that is used to build <see cref="HttpClientFactoryOptions"/></param>
+        void Register(string name, Action<IHttpClientFactoryOptionsBuilder> configureOptions);
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -17,7 +17,6 @@ namespace Microsoft.Extensions.Http
         public ExpiredHandlerTrackingEntry(ActiveHandlerTrackingEntry other)
         {
             Name = other.Name;
-            Scope = other.Scope;
 
             _livenessTracker = new WeakReference(other.Handler);
             InnerHandler = other.Handler.InnerHandler;
@@ -28,7 +27,5 @@ namespace Microsoft.Extensions.Http
         public HttpMessageHandler InnerHandler { get; }
 
         public string Name { get; }
-
-        public IServiceScope Scope { get; }
     }
 }
