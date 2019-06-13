@@ -148,7 +148,6 @@ namespace Microsoft.Extensions.Http
             try
             {
                 var builder = services.GetRequiredService<HttpMessageHandlerBuilder>();
-                builder.Name = name;
 
                 // This is similar to the initialization pattern in:
                 // https://github.com/aspnet/Hosting/blob/e892ed8bbdcd25a0dafc1850033398dc57f65fe1/src/Microsoft.AspNetCore.Hosting/Internal/WebHost.cs#L188

@@ -19,16 +19,6 @@ namespace Microsoft.Extensions.Http
     public abstract class HttpMessageHandlerBuilder
     {
         /// <summary>
-        /// Gets or sets the name of the <see cref="HttpClient"/> being created.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="Name"/> is set by the <see cref="IHttpClientFactory"/> infrastructure
-        /// and is public for unit testing purposes only. Setting the <see cref="Name"/> outside of
-        /// testing scenarios may have unpredictable results.
-        /// </remarks>
-        public abstract string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the primary <see cref="HttpMessageHandler"/>.
         /// </summary>
         public abstract HttpMessageHandler PrimaryHandler { get; set; }

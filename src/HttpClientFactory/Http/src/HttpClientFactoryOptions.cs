@@ -13,6 +13,7 @@ namespace Microsoft.Extensions.Http
     /// </summary>
     public class HttpClientFactoryOptions
     {
+        
         // Establishing a minimum lifetime helps us avoid some possible destructive cases.
         //
         // IMPORTANT: This is used in a resource string. Update the resource if this changes.
