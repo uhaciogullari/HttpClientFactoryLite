@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using Microsoft.Extensions.Internal;
@@ -15,7 +13,6 @@ namespace Microsoft.Extensions.Http
     internal class DefaultHttpClientFactory : IHttpClientFactory, IHttpMessageHandlerFactory
     {
         private static readonly TimerCallback _cleanupCallback = (s) => ((DefaultHttpClientFactory)s).CleanupTimer_Tick();
-        private readonly IHttpMessageHandlerBuilderFilter[] _filters;
         private readonly Func<string, Lazy<ActiveHandlerTrackingEntry>> _entryFactory;
 
         // Default time of 10s for cleanup seems reasonable.
@@ -52,16 +49,8 @@ namespace Microsoft.Extensions.Http
         internal readonly ConcurrentQueue<ExpiredHandlerTrackingEntry> _expiredHandlers;
         private readonly TimerCallback _expiryCallback;
 
-        public DefaultHttpClientFactory(
-            IEnumerable<IHttpMessageHandlerBuilderFilter> filters)
+        public DefaultHttpClientFactory()
         {
-            if (filters == null)
-            {
-                throw new ArgumentNullException(nameof(filters));
-            }
-
-            _filters = filters.ToArray();
-
             // case-sensitive because named options is.
             _activeHandlers = new ConcurrentDictionary<string, Lazy<ActiveHandlerTrackingEntry>>(StringComparer.Ordinal);
             _registeredOptions = new ConcurrentDictionary<string, HttpClientFactoryOptions>();
@@ -136,15 +125,7 @@ namespace Microsoft.Extensions.Http
             var options = GetOptions(name);
             var builder = new DefaultHttpMessageHandlerBuilder();
 
-            // This is similar to the initialization pattern in:
-            // https://github.com/aspnet/Hosting/blob/e892ed8bbdcd25a0dafc1850033398dc57f65fe1/src/Microsoft.AspNetCore.Hosting/Internal/WebHost.cs#L188
-            Action<HttpMessageHandlerBuilder> configure = Configure;
-            for (var i = _filters.Length - 1; i >= 0; i--)
-            {
-                configure = _filters[i].Configure(configure);
-            }
-
-            configure(builder);
+            Configure(builder);
 
             // Wrap the handler so we can ensure the inner handler outlives the outer handler.
             var handler = new LifetimeTrackingHttpMessageHandler(builder.Build());
