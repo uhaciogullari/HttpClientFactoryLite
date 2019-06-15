@@ -10,9 +10,9 @@ using Microsoft.Extensions.Internal;
 
 namespace Microsoft.Extensions.Http
 {
-    internal class DefaultHttpClientFactory : IHttpClientFactory, IHttpMessageHandlerFactory
+    public class HttpClientFactory : IHttpClientFactory, IHttpMessageHandlerFactory
     {
-        private static readonly TimerCallback _cleanupCallback = (s) => ((DefaultHttpClientFactory)s).CleanupTimer_Tick();
+        private static readonly TimerCallback _cleanupCallback = (s) => ((HttpClientFactory)s).CleanupTimer_Tick();
         private readonly Func<string, Lazy<ActiveHandlerTrackingEntry>> _entryFactory;
 
         // Default time of 10s for cleanup seems reasonable.
@@ -49,7 +49,7 @@ namespace Microsoft.Extensions.Http
         internal readonly ConcurrentQueue<ExpiredHandlerTrackingEntry> _expiredHandlers;
         private readonly TimerCallback _expiryCallback;
 
-        public DefaultHttpClientFactory()
+        public HttpClientFactory()
         {
             // case-sensitive because named options is.
             _activeHandlers = new ConcurrentDictionary<string, Lazy<ActiveHandlerTrackingEntry>>(StringComparer.Ordinal);
