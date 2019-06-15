@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <PackageId>HttpClientFactoryLite</PackageId>
+    <Version>0.1.0</Version>
+    <RepositoryUrl>https://github.com/uhaciogullari/HttpClientFactoryLite</RepositoryUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RootNamespace>Microsoft.Extensions.Http</RootNamespace>
     <Description>
       This library is a fork of Microsoft.Extensions.Http. It provides the basic HttpMessageHandler rotation functionality without any dependencies.
@@ -15,8 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(SharedSourceRoot)NonCapturingTimer\**\*.cs" />
-    <Compile Include="$(SharedSourceRoot)TypeNameHelper\**\*.cs" />
+    <Compile Include="..\..\..\Shared\src\NonCapturingTimer\NonCapturingTimer.cs" Link="NonCapturingTimer.cs" />
+    <Compile Include="..\..\..\Shared\src\TypeNameHelper\TypeNameHelper.cs" Link="TypeNameHelper.cs" />
   </ItemGroup>
 
 </Project>
