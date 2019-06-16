@@ -32,18 +32,21 @@ Configuration was done through DI in the original library. IHttpClientFactory.Re
 Configure HttpClient before it's returned:
 
 ```csharp
-httpClientFactory.Register("github", builder => builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
+httpClientFactory.Register("github", builder => 
+    builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
 ```
 
 Customize the primary HttpClientHandler:
 
 ```csharp
-httpClientFactory.Register("github", builder => builder.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { UseCookies = true }));
+httpClientFactory.Register("github", builder =>
+    builder.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { UseCookies = true }));
 ```
 
 Specify a type instead to create the key during registration and client creation:
 ```csharp
-httpClientFactory.Register<GithubClient>(builder => builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
+httpClientFactory.Register<GithubClient>(builder =>
+    builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
 
 // before the request
 httpClientFactory.CreateClient<GithubClient>();
