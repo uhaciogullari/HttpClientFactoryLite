@@ -1,47 +1,76 @@
-.NET Extensions
+HttpClientFactoryLite
 ===============
 
-[![Build Status](https://dev.azure.com/dnceng/public/_apis/build/status/aspnet/Extensions/Extensions-ci)](https://dev.azure.com/dnceng/public/_build/latest?definitionId=23)
+[Microsoft.Extensions.Http][0] fork with no dependencies.
 
-.NET Extensions is an open-source, cross-platform set of APIs for commonly used programming patterns and utilities, such as dependency injection, logging, and app configuration. Most of the API in this project is meant to work on many .NET platforms, such as .NET Core, .NET Framework, Xamarin, and others. While commonly used in ASP.NET Core applications, these APIs are not coupled to the ASP.NET Core application model. They can be used in console apps, WinForms and WPF, and others.
+[![NuGet version](https://img.shields.io/nuget/v/HttpClientFactoryLite.svg)](https://www.nuget.org/packages/HttpClientFactoryLite/)
 
-## Get Started
+## Why?
 
-Follow the [Get Started](https://www.microsoft.com/net) guide for .NET to setup an initial .NET application.
-Microsoft.Extensions APIs can then be added to the project using the [NuGet Package Manager](https://nuget.org).
+[As you well know, HttpClient has problems][1]. Create an instance for every request and you will run into socket exhaustion. Make it a singleton and it will not respect DNS changes.
 
-## How to Engage, Contribute, and Give Feedback
+ASP.NET team created the [HttpClientFactory][2] to fix the issue. However it was implemented in an opinionated way, too opinionated for my case. While I love dependency injection and ASP.NET as much as the next person, there are a few cases where you don't want to or can't bring in all those dependencies. It should be possible to new up an HttpClientFactory and put it in a static field if you are not into dependency injection. You could also be completely happy with another DI container and don't want to mix it up with ASP.NET stuff.
 
-Some of the best ways to contribute are to try things out, file issues, join in design conversations,
-and make pull-requests.
+Fortunately the code is licensed under Apache License so we are free to surgically remove the parts we don't want.
 
-* [Download our latest daily builds](./docs/daily-builds.md)
-* [Build .NET Extensions from source code](./docs/build-from-source.md)
-* Check out the [contributing](CONTRIBUTING.md) page to see the best places to log issues and start discussions.
+The end result:
 
-## Reporting security issues and bugs
+```csharp
+var httpClientFactory = new HttpClientFactory(); //bliss
+```
 
-Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC)  secure@microsoft.com. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the [Security TechCenter](https://technet.microsoft.com/en-us/security/ff852094.aspx).
+If you are using dependency injection, make sure that IHttpClientFactory is registered as a singleton.
 
-## Related projects
+## What's different?
 
-These are some other repos for related projects:
+The changes in the public interface are kept to a minimum.
 
-* [.NET Core](https://github.com/dotnet/core) - a cross-platform, open-source .NET platform
-* [ASP.NET Core](https://github.com/aspnet/AspNetCore) - a .NET Core framework for building web apps
-* [Entity Framework Core](https://github.com/aspnet/EntityFrameworkCore) - data access technology
+### Configuration
 
-## Code of conduct
+Configuration was done through DI in the original library. IHttpClientFactory.Register method was introduced to provide the same functionality. A few examples:
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).  For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+Configure HttpClient before it's returned:
 
-## Community forks
+```csharp
+httpClientFactory.Register("github", builder => builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
+```
 
-Some parts of this project have been forked by the community to add additional functionality:
+Customize the primary HttpClientHandler:
 
-#### [McMaster.Extensions.CommandLineUtils](https://github.com/natemcmaster/CommandLineUtils)
+```csharp
+httpClientFactory.Register("github", builder => builder.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { UseCookies = true }));
+```
 
-This is a fork of Microsoft.Extensions.CommandLineUtils.
+Specify a type instead to create the key during registration and client creation:
+```csharp
+httpClientFactory.Register<GithubClient>(builder => builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
 
- - GitHub: <https://github.com/natemcmaster/CommandLineUtils>
- - NuGet: <https://www.nuget.org/packages/McMaster.Extensions.CommandLineUtils>
+// before the request
+httpClientFactory.CreateClient<GithubClient>();
+```
+
+### Logging
+
+All logging related code is removed to make sure that the library has no dependencies. 
+
+### Typed clients
+
+Typed clients are removed because they were tightly coupled to the dependency injection infrastructure.
+
+### Your repository is too many commits behind
+
+I forked [the last stable release branch][3], you can see [the full diff here][4]. Keep in mind that the original repo has many libraries in it and it's safe to assume that most of the commits won't be related to HttpClientFactory. I will take another look when there's a new stable release.
+
+## Feedback
+
+Let me know if there's something missing. I didn't get to fix the tests and Polly project yet.
+
+[0]: https://www.nuget.org/packages/Microsoft.Extensions.Http
+
+[1]: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests
+
+[2]: https://github.com/aspnet/Extensions/tree/master/src/HttpClientFactory
+
+[3]: https://github.com/aspnet/Extensions/tree/release/2.2
+
+[4]: https://github.com/aspnet/Extensions/compare/release%2F2.2...uhaciogullari:hcf-lite?diff
