@@ -49,7 +49,7 @@ httpClientFactory.Register<GithubClient>(builder =>
     builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
 
 // before the request
-httpClientFactory.CreateClient<GithubClient>();
+var client = httpClientFactory.CreateClient<GithubClient>();
 ```
 
 ### Logging
