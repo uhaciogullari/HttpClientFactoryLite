@@ -29,21 +29,16 @@ The changes in the public interface are kept to a minimum.
 
 Configuration was done through DI in the original library. IHttpClientFactory.Register method was introduced to provide the same functionality. A few examples:
 
-Configure HttpClient before it's returned:
-
 ```csharp
-httpClientFactory.Register("github", builder => 
-    builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
+httpClientFactory.Register("github", builder => builder
+    // Configure HttpClient before it's returned
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/"))
+    // Customize the primary HttpClientHandler
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { UseCookies = true })
+    // Set HttpMessageHandler lifetime
+    .SetHandlerLifetime(TimeSpan.FromMinutes(10)));
 ```
-
-Customize the primary HttpClientHandler:
-
-```csharp
-httpClientFactory.Register("github", builder =>
-    builder.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { UseCookies = true }));
-```
-
-Specify a type instead to create the key during registration and client creation:
+You can also specify a type as a key during registration and client creation:
 ```csharp
 httpClientFactory.Register<GithubClient>(builder =>
     builder.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api.github.com/")));
