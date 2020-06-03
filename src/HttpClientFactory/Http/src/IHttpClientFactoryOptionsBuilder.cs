@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     /// <summary>
     /// A builder for configuring named <see cref="HttpClient"/> instances returned by <see cref="IHttpClientFactory"/>.

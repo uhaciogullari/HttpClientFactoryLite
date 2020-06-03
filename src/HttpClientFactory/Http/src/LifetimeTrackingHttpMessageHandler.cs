@@ -1,9 +1,9 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Net.Http;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     // This a marker used to check if the underlying handler should be disposed. HttpClients
     // share a reference to an instance of this class, and when it goes out of scope the inner handler

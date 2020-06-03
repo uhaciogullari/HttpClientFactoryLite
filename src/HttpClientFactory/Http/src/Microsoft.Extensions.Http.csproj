@@ -1,18 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.2.0</Version>
-    <RootNamespace>Microsoft.Extensions.Http</RootNamespace>
-
-    <RootNamespace>Microsoft.Extensions.Http</RootNamespace>
+    <Version>0.4.0</Version>
+    <AssemblyName>HttpClientFactoryLite</AssemblyName>
+    <RootNamespace>HttpClientFactoryLite</RootNamespace>
     <RepositoryUrl>https://github.com/uhaciogullari/HttpClientFactoryLite</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageId>HttpClientFactoryLite</PackageId>
     <Description>
       This library is a fork of Microsoft.Extensions.Http. It provides the basic HttpMessageHandler rotation functionality without any dependencies.
       Commonly used types:
-      System.Net.Http.IHttpClientFactory
+      HttpClientFactoryLite.IHttpClientFactory
+      HttpClientFactoryLite.HttpClientFactory
     </Description>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

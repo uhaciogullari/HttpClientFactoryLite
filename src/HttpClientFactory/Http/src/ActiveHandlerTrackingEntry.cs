@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using Microsoft.Extensions.Internal;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     // Thread-safety: We treat this class as immutable except for the timer. Creating a new object
     // for the 'expiry' pool simplifies the threading requirements significantly.

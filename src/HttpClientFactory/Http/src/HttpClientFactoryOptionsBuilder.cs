@@ -1,8 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Threading;
+using HttpClientFactoryLite.Properties;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     class HttpClientFactoryOptionsBuilder : IHttpClientFactoryOptionsBuilder
     {

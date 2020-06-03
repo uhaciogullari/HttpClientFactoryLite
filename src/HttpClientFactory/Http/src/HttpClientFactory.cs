@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using Microsoft.Extensions.Internal;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     public class HttpClientFactory : IHttpClientFactory, IHttpMessageHandlerFactory
     {

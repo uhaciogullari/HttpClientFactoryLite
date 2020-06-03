@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using Microsoft.Extensions.Internal;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     public static class HttpClientFactoryExtensions
     {

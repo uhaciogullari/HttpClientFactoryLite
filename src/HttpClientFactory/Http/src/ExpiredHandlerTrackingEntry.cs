@@ -4,7 +4,7 @@
 using System;
 using System.Net.Http;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     // Thread-safety: This class is immutable
     internal class ExpiredHandlerTrackingEntry

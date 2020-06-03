@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using HttpClientFactoryLite.Properties;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     class DefaultHttpMessageHandlerBuilder : HttpMessageHandlerBuilder
     {

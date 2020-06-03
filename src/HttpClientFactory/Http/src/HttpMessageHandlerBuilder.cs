@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using HttpClientFactoryLite.Properties;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     /// <summary>
     /// A builder abstraction for configuring <see cref="HttpMessageHandler"/> instances.

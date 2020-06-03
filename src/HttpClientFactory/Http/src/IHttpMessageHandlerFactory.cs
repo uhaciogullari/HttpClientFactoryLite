@@ -1,7 +1,9 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-namespace System.Net.Http
+using System.Net.Http;
+
+namespace HttpClientFactoryLite
 {
     /// <summary>
     /// A factory abstraction for a component that can create <see cref="HttpMessageHandler"/> instances with custom

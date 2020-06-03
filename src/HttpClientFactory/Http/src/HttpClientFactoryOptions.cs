@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
+using HttpClientFactoryLite.Properties;
 
-namespace Microsoft.Extensions.Http
+namespace HttpClientFactoryLite
 {
     /// <summary>
     /// An options class for configuring the default <see cref="IHttpClientFactory"/>.
