@@ -16,6 +16,8 @@ Fortunately the code is licensed under Apache License so we are free to surgical
 The end result:
 
 ```csharp
+using HttpClientFactoryLite;
+
 var httpClientFactory = new HttpClientFactory(); //bliss
 ```
 
